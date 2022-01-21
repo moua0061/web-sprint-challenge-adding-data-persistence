@@ -1,7 +1,23 @@
 const db = require('../../data/dbConfig')
 
-function getProjects(){
-    return db('projects')
+async function getProjects(){
+    const projects = await db('projects')
+    
+    return projects.map(project => {
+        if(project.project_completed === 0) 
+        return { 
+            project_id: project.project_id,
+            project_name: project.project_name,
+            project_description: project.project_description,
+            project_completed: false
+        } 
+        return {
+            project_id: project.project_id,
+            project_name: project.project_name,
+            project_description: project.project_description,
+            project_completed: true
+        }
+    }) 
 }
 
 function getProjectsId(id){
@@ -9,7 +25,7 @@ function getProjectsId(id){
 }
 
 async function createNewProject(project){
-    const [project_id] = await db('projects').insert(project);
+    const project_id = await db('projects').insert(project);
     return getProjectsId(project_id)
 }
 

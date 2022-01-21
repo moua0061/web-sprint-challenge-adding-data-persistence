@@ -5,21 +5,7 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
     Projects.getProjects()
         .then(projects => {
-            if(projects.project_completed === 0) {
-                res.json({
-                    project_id: projects.project_id,
-                    project_name: projects.project_name,
-                    project_description: projects.project_description,
-                    project_completed: false
-                })
-            } else {
-                res.json({
-                    project_id: projects.project_id,
-                    project_name: projects.project_name,
-                    project_description: projects.project_description,
-                    project_completed: true
-                })
-            }
+            res.json(projects)
         })
         .catch(next)
 });
@@ -27,7 +13,21 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
     Projects.createNewProject(req.body)
         .then(newProject => {
-            res.status(201).json(newProject)
+            if(newProject.project_completed === 0){
+                res.status(201).json({
+                    project_id: newProject.project_id,
+                    project_name: newProject.project_name,
+                    project_description: newProject.project_description,
+                    project_completed: false
+                })
+            } else {
+                res.status(201).json({
+                    project_id: newProject.project_id,
+                    project_name: newProject.project_name,
+                    project_description: newProject.project_description,
+                    project_completed: true
+                })
+            }
         })
         .catch(next)
 })
