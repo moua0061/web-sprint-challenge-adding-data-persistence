@@ -1,7 +1,7 @@
 const db = require('../../data/dbConfig')
 
 function getTasks(){
-    return 'getting all tasks'
+    return db('tasks')
 }
 
 function createNewTask(){

@@ -1,12 +1,13 @@
 const express = require('express')
-//import model here
+const Tasks = require('./model');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.json({
-        message: 'we getting GET /api/tasks'
-    })
-    console.log(`we're at the GET /api/tasks end point!`)
+router.get('/', (req, res, next) => {
+    Tasks.getTasks()
+        .then(tasks => {
+            res.json(tasks)
+        })
+        .catch(next)
 })
 
 module.exports = router;

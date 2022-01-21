@@ -1,12 +1,13 @@
 const express = require('express')
-//import model here
+const Resources = require('./model')
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.json({
-        message: 'we getting GET /api/resources'
-    })
-    console.log(`we're at the GET /api/resources end point!`)
+router.get('/', (req, res, next) => {
+    Resources.getResources()
+        .then(resources => {
+            res.json(resources)
+        })
+        .catch(next)
 })
 
 module.exports = router;

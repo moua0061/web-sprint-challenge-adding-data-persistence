@@ -1,7 +1,7 @@
 const db = require('../../data/dbConfig')
 
 function getResources(){
-    return 'getting all resources'
+    return db('resources')
 }
 
 function createNewResource(){

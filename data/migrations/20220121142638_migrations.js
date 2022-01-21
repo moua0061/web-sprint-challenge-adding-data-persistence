@@ -15,7 +15,7 @@ exports.up = function(knex) {
             table.increments('task_id')
             table.text('task_description').notNullable()
             table.text('task_notes')
-            table.integer('ask_completed').defaultTo(0)
+            table.integer('task_completed').defaultTo(0)
             table.integer('project_id')
                 .unsigned()
                 .notNullable()
