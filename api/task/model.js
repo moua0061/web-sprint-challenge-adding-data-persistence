@@ -1,7 +1,34 @@
 const db = require('../../data/dbConfig')
 
-function getTasks(){
-    return db('tasks')
+async function getTasks(){
+    // select t.task_id, t.task_description, t.task_notes, t.task_completed, p.project_name, p.project_description from tasks as t
+    //join projects as p on p.project_id = t.project_id;
+
+    const tasks = await db('tasks as t')
+        .leftJoin('projects as p')
+        .select('t.task_id', 't.task_description', 't.task_notes', 't.task_completed', 'p.project_name', 'p.project_description')
+    
+    return tasks.map(task => {
+        if(task.task_completed === 0) {
+            return {
+                task_id: task.task_id,
+                task_description: task.task_description,
+                task_notes: task.task_notes,
+                task_completed: false,
+                project_name: task.project_name,
+                project_description: task.project_description
+            }
+        } else {
+            return {
+                task_id: task.task_id,
+                task_description: task.task_description,
+                task_notes: task.task_notes,
+                task_completed: false,
+                project_name: task.project_name,
+                project_description: task.project_description
+            }
+        }
+    })
 }
 
 function getTaskId(id){
