@@ -14,7 +14,7 @@ exports.up = function(knex) {
         .createTable('tasks', table => {
             table.increments('task_id')
             table.text('task_description').notNullable()
-            table.text('task_notes`')
+            table.text('task_notes')
             table.integer('ask_completed').defaultTo(0)
             table.integer('project_id')
                 .unsigned()
@@ -59,4 +59,3 @@ exports.down = function(knex) {
         .dropTableIfExists('resources')
         .dropTableIfExists('projects')
 };
-
