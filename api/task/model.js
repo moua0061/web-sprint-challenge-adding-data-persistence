@@ -32,27 +32,28 @@ function getTaskId(id){
     return db('tasks').where('task_id', id).first()
 }
 
-async function createNewTask(task){
-    const [task_id] = await db('tasks').insert(task)
-    const something = getTaskId(task_id)
-        if(something.task_completed === 0){
-            return {
-                task_id: something.task_id,
-                task_description: something.task_description,
-                task_notes: something.task_notes,
-                task_completed: false,
-                project_id: something.project_id
-            }
-        } else {
-            return {
-                task_id: something.task_id,
-                task_description: something.task_description,
-                task_notes: something.task_notes,
-                task_completed: true,
-                project_id: something.project_id
-            }
+const createNewTask = async newTask => {
+    const taskId = await db('tasks').insert(newTask)
+    const task =  await db('tasks').where('task_id', taskId).first()
+
+    if(task.task_completed === 0){
+        return {
+            task_id: task.task_id,
+            task_description: task.task_description,
+            task_notes: task.task_notes,
+            task_completed: false,
+            project_id: task.project_id
         }
-}
+    } else {
+        return {
+            task_id: task.task_id,
+            task_description: task.task_description,
+            task_notes: task.task_notes,
+            task_completed: true,
+            project_id: task.project_id
+        }
+    }
+};
 
 module.exports = {
     getTasks,
