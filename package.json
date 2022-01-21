@@ -5,9 +5,10 @@
   "scripts": {
     "server": "nodemon index.js",
     "start": "node index.js",
-    "up": "knex migration:up",
-    "down": "knex migration:down",
-    "migrate": "knex migration:latest",
+    "up": "knex migrate:up",
+    "down": "knex migrate:down",
+    "migrate": "knex migrate:latest",
+    "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
     "reset": "npm run rollback && npm run migrate && npm run seed",
     "test": "cross-env NODE_ENV=testing jest --verbose --runInBand --silent"
