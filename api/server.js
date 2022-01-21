@@ -1,5 +1,5 @@
 const express = require('express');
-//import routers
+
 const projectsRouter = require('./project/router');
 const resourcesRouter = require('./resource/router');
 const tasksRouter = require('./task/router');
